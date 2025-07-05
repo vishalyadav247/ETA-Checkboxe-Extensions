@@ -6,8 +6,8 @@
 api_version = "2025-04"
 
 [[extensions]]
-name = "Delivery estimation"
-handle = "delivery-estimation"
+name = "Mandatory checkboxes"
+handle = "mandatory-checkboxes"
 type = "ui_extension"
 
 
@@ -23,6 +23,7 @@ target = "purchase.checkout.block.render"
 # Gives your extension access to directly query Shopify’s storefront API.
 # https://shopify.dev/docs/api/checkout-ui-extensions/unstable/configuration#api-access
 api_access = true
+block_progress = true
 
 # Gives your extension access to make external network calls, using the
 # JavaScript `fetch()` API. Learn more:
@@ -44,9 +45,24 @@ api_access = true
 # your extension. Learn more:
 # https://shopify.dev/docs/api/checkout-ui-extensions/unstable/configuration#settings-definition
 
-# [extensions.settings]
-# [[extensions.settings.fields]]
-# key = "banner_title"
-# type = "single_line_text_field"
-# name = "Banner title"
-# description = "Enter a title for the banner"
+[extensions.settings]
+
+[[extensions.settings.fields]]
+key = "check_1"
+type = "single_line_text_field"
+name = "Terms & Conditions Url"
+description = "Note: Add the full url here."
+
+[[extensions.settings.fields]]
+key = "check_2"
+type = "single_line_text_field"
+name = "External Door Product Disclaimer Url"
+description = "Note: Add the full url here."
+
+[[extensions.settings.fields]]
+key = "check_3"
+type = "single_line_text_field"
+name = "Custom Finish Url"
+description = "Note: Add the full url here."
+
+
