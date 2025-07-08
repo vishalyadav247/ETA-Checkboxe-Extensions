@@ -1,8 +1,8 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "7fab5c79e29bfabf526d60211a37eb24"
-name = "ETA Checkout UI"
-handle = "eta-checkout-ui"
+name = "ETA/Checkbox Extensions"
+handle = "eta-checkbox-extensions"
 application_url = "https://shopify.dev/apps/default-app-home"
 embedded = true
 

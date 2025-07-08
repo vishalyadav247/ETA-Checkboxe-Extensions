@@ -30,12 +30,12 @@ function ConditionalMandatoryCheckboxes() {
 
   const checkFinishLogic = (products) => {
     const hasFinish = products.some(product =>
-      product.merchandise?.selectedOptions?.some(option => option.name === "finish")
+      product.merchandise?.selectedOptions?.some(option => option.name.toLowerCase() === "finish")
     );
 
     const hasUnfinished = products.some(product =>
       product.merchandise?.selectedOptions?.some(
-        option => option.name === "finish" && option.value === "unfinished"
+        option => option.name.toLowerCase() === "finish" && option.value.toLowerCase() === "unfinished"
       )
     );
 
