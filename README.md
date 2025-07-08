@@ -1,78 +1,50 @@
-# Shopify App Template - Extension only
+# UK Oak Doors Shopify Checkout UI Extensions
 
-This is a template for building an [extension-only Shopify app](https://shopify.dev/docs/apps/build/app-extensions/build-extension-only-app). It contains the basics for building a Shopify app that uses only app extensions.
+This Shopify app contains two custom checkout UI extensions:
 
-This template doesn't include a server or the ability to embed a page in the Shopify Admin. If you want either of these capabilities, choose the [Remix app template](https://github.com/Shopify/shopify-app-template-remix) instead.
+## Extensions
 
-Whether you choose to use this template or another one, you can use your preferred package manager and the Shopify CLI with [these steps](#installing-the-template).
+### 1. Delivery Estimation (`delivery-estimation`)
+Displays an estimated dispatch date to customers at checkout, based on cart or product attributes.  
+- **Location:** `/extensions/delivery-estimation`
+- **Features:**  
+  - Shows a banner with the estimated dispatch date.
+  - Reacts to cart changes and dynamically updates the estimation.
 
-## Benefits
+### 2. Mandatory Checkboxes (`mandatory-checkboxes`)
+Adds mandatory checkboxes to the checkout, requiring customers to accept terms and disclaimers before payment.
+- **Location:** `/extensions/mandatory-checkboxes`
+- **Features:**  
+  - Dynamically shows checkboxes based on cart contents (e.g., product type or options).
+  - Prevents checkout until all required checkboxes are checked.
 
-Shopify apps are built on a variety of Shopify tools to create a great merchant experience. The [create an app](https://shopify.dev/docs/apps/getting-started/create) tutorial in our developer documentation will guide you through creating a Shopify app.
+## Installation & Setup
 
-This app template does little more than install the CLI and scaffold a repository.
+1. **Clone this repository** and install dependencies:
+   ```sh
+   npm install
+   ```
 
-## Getting started
+2. **Update environment variables** and Shopify app settings as needed.
 
-### Requirements
+3. **Configure metafields**  
+   For the delivery estimation extension, ensure the required product metafields (e.g., `custom.dispatch_eta_map`) are created and published to the Storefront API.
 
-1. You must [download and install Node.js](https://nodejs.org/en/download/) if you don't already have it.
-1. You must [create a Shopify partner account](https://partners.shopify.com/signup) if you don’t have one.
-1. You must create a store for testing if you don't have one, either a [development store](https://help.shopify.com/en/partners/dashboard/development-stores#create-a-development-store) or a [Shopify Plus sandbox store](https://help.shopify.com/en/partners/dashboard/managing-stores/plus-sandbox-store).
+4. **Deploy extensions to your Shopify store:**
+   ```sh
+   shopify app dev
+   ```
+   or
+   ```sh
+   shopify extension push
+   ```
 
-### Installing the template
+5. **Test in your development store** to ensure both extensions appear and function as expected at checkout.
 
-This template can be installed using your preferred package manager:
+## Extension-specific README files
 
-Using yarn:
+Each extension folder contains its own `README.md` with more detailed usage and configuration instructions.
 
-```shell
-yarn create @shopify/app
-```
+---
 
-Using npm:
-
-```shell
-npm init @shopify/app@latest
-```
-
-Using pnpm:
-
-```shell
-pnpm create @shopify/app@latest
-```
-
-This will clone the template and install the required dependencies.
-
-#### Local Development
-
-[The Shopify CLI](https://shopify.dev/docs/apps/tools/cli) connects to an app in your Partners dashboard. It provides environment variables and runs commands in parallel.
-
-You can develop locally using your preferred package manager. Run one of the following commands from the root of your app.
-
-Using yarn:
-
-```shell
-yarn dev
-```
-
-Using npm:
-
-```shell
-npm run dev
-```
-
-Using pnpm:
-
-```shell
-pnpm run dev
-```
-
-Open the URL generated in your console. Once you grant permission to the app, you can start development (such as generating extensions).
-
-## Developer resources
-
-- [Introduction to Shopify apps](https://shopify.dev/docs/apps/getting-started)
-- [App extensions](https://shopify.dev/docs/apps/build/app-extensions)
-- [Extension only apps](https://shopify.dev/docs/apps/build/app-extensions/build-extension-only-app)
-- [Shopify CLI](https://shopify.dev/docs/apps/tools/cli)
+For more information, see the [Shopify Checkout UI Extensions documentation](https://shopify.dev/docs/api/checkout-ui-extensions).

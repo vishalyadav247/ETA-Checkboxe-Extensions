@@ -9,7 +9,8 @@ import {
   Text,
   Banner,
   Link,
-  useSettings
+  useSettings,
+  useCartLines
 } from "@shopify/ui-extensions-react/checkout";
 
 export default reactExtension("purchase.checkout.block.render", () => (
@@ -20,23 +21,46 @@ function ConditionalMandatoryCheckboxes() {
   const { check_1, check_2, check_3 } = useSettings();
   const applyAttributeChange = useApplyAttributeChange();
   const { lines } = useApi();
+  const cartLines = useCartLines();
 
   let products = lines.current;
   let allProductTypes = products.map((product) => {
     return product.merchandise?.product?.productType;
   })
-  let allSelectedProductOptions = products.flatMap((product) => {
-    return product.merchandise?.selectedOptions.map(option => option.name) || [];
-  });
+
+  const checkFinishLogic = (products) => {
+    const hasFinish = products.some(product =>
+      product.merchandise?.selectedOptions?.some(option => option.name === "finish")
+    );
+
+    const hasUnfinished = products.some(product =>
+      product.merchandise?.selectedOptions?.some(
+        option => option.name === "finish" && option.value === "unfinished"
+      )
+    );
+
+    if (hasFinish) {
+      return !hasUnfinished
+    } else {
+      return false; // If no finish option, we assume it's valid
+    }
+  }
+  // console.log(allSelectedProductOptions)
 
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
   const [blockPaymentJourney, setBlockPaymentJourney] = useState(false);
 
+  const [showThirdCheckbox,setShowThirdCheckbox] = useState(false);
+
   // Determine which checkboxes should be shown
   const showSecondCheckbox = allProductTypes.some(type => typeof type === 'string' && type.toLowerCase() === 'internal doors');
-  const showThirdCheckbox = allSelectedProductOptions.some(option => typeof option === 'string' && option.toLowerCase().includes('finish'));
+  
+  useEffect(() => {
+    let res = checkFinishLogic(cartLines);
+    setShowThirdCheckbox(res);
+  }, [JSON.stringify(cartLines)]);
 
   useEffect(() => {
     // Only consider checkboxes that are visible for logic and attributes

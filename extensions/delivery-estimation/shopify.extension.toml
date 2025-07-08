@@ -6,7 +6,7 @@
 api_version = "2025-04"
 
 [[extensions]]
-name = "Delivery estimation"
+name = "Delivery Estimation"
 handle = "delivery-estimation"
 type = "ui_extension"
 

@@ -6,7 +6,7 @@
 api_version = "2025-04"
 
 [[extensions]]
-name = "Mandatory checkboxes"
+name = "Mandatory Checkboxes"
 handle = "mandatory-checkboxes"
 type = "ui_extension"
 
