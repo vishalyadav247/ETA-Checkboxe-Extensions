@@ -45,24 +45,24 @@ block_progress = true
 # your extension. Learn more:
 # https://shopify.dev/docs/api/checkout-ui-extensions/unstable/configuration#settings-definition
 
-[extensions.settings]
+#[extensions.settings]
 
-[[extensions.settings.fields]]
-key = "check_1"
-type = "single_line_text_field"
-name = "Terms & Conditions Url"
-description = "Note: Add the full url here."
+#[[extensions.settings.fields]]
+#key = "check_1"
+#type = "single_line_text_field"
+#name = "Terms & Conditions Url"
+#description = "Note: Add the full url here."
 
-[[extensions.settings.fields]]
-key = "check_2"
-type = "single_line_text_field"
-name = "External Door Product Disclaimer Url"
-description = "Note: Add the full url here."
+#[[extensions.settings.fields]]
+#key = "check_2"
+#type = "single_line_text_field"
+#name = "External Door Product Disclaimer Url"
+#description = "Note: Add the full url here."
 
-[[extensions.settings.fields]]
-key = "check_3"
-type = "single_line_text_field"
-name = "Custom Finish Url"
-description = "Note: Add the full url here."
+#[[extensions.settings.fields]]
+#key = "check_3"
+#type = "single_line_text_field"
+#name = "Custom Finish Url"
+#description = "Note: Add the full url here."
 
 

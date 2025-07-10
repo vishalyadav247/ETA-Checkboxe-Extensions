@@ -1,4 +1,6 @@
+import React from "react";
 import { useState, useEffect } from "react";
+import ProductDisclaimer from "./components/productDisclaimer";
 import {
   reactExtension,
   useApi,
@@ -7,20 +9,23 @@ import {
   BlockStack,
   Checkbox,
   Text,
-  Banner,
   Link,
+  Modal,
+  Button,
   useSettings,
-  useCartLines
+  useCartLines,
+  BlockSpacer
 } from "@shopify/ui-extensions-react/checkout";
+import Terms_and_conditions from "./components/terms_and_conditions";
 
 export default reactExtension("purchase.checkout.block.render", () => (
   <ConditionalMandatoryCheckboxes />
 ));
 
 function ConditionalMandatoryCheckboxes() {
-  const { check_1, check_2, check_3 } = useSettings();
+  // const { check_1, check_2, check_3 } = useSettings();
   const applyAttributeChange = useApplyAttributeChange();
-  const { lines } = useApi();
+  const { lines, ui } = useApi();
   const cartLines = useCartLines();
 
   let products = lines.current;
@@ -52,11 +57,11 @@ function ConditionalMandatoryCheckboxes() {
   const [checked3, setChecked3] = useState(false);
   const [blockPaymentJourney, setBlockPaymentJourney] = useState(false);
 
-  const [showThirdCheckbox,setShowThirdCheckbox] = useState(false);
+  const [showThirdCheckbox, setShowThirdCheckbox] = useState(false);
 
   // Determine which checkboxes should be shown
   const showSecondCheckbox = allProductTypes.some(type => typeof type === 'string' && type.toLowerCase() === 'internal doors');
-  
+
   useEffect(() => {
     let res = checkFinishLogic(cartLines);
     setShowThirdCheckbox(res);
@@ -150,11 +155,67 @@ function ConditionalMandatoryCheckboxes() {
     <BlockStack spacing="tight">
       <Text emphasis="bold">Please confirm before payment:</Text>
       <Checkbox checked={checked1} onChange={setChecked1} id="check1">
-        <Text>I have read and accept the <Link to={check_1}>terms and conditions</Link>.</Text>
+        <Text>
+          I have read and accept the{' '}
+          <Link
+            overlay={
+              <Modal
+                id="terms-modal"
+                padding
+                title="Terms and Conditions"
+                size="max"
+              >
+                <Terms_and_conditions />
+                <BlockSpacer spacing="loose" />
+                <BlockSpacer spacing="loose" />
+                <Button
+                  onPress={() => {
+                    setChecked1(true);
+                    ui.overlay.close('terms-modal')
+                  }}
+                >
+                  I HAVE READ AND ACCEPT
+                </Button>
+                <BlockSpacer spacing="loose" />
+              </Modal>
+            }
+          >
+            terms and conditions
+          </Link>.
+        </Text>
       </Checkbox>
       {showSecondCheckbox && (
         <Checkbox checked={checked2} onChange={setChecked2} id="check2">
-          <Text>I have read and understood the <Link to={check_2}>External Door Product Disclaimer</Link> and understand that by not following this information, I will void the door's warranty.</Text>
+          <Text>
+            I have read and understood the{' '}
+            <Link
+              overlay={
+                <Modal
+                  id="disclaimer-modal"
+                  padding
+                  title="External Door Product Disclaimer"
+                  size="max"
+                >
+                  <BlockSpacer spacing="loose" />
+                  <ProductDisclaimer />
+                  <BlockSpacer spacing="loose" />
+                  <BlockSpacer spacing="loose" />
+                  <Button
+                    onPress={() => {
+                      setChecked2(true);
+                      ui.overlay.close('disclaimer-modal')
+                    }}
+                  >
+                    I HAVE READ AND ACCEPT
+                  </Button>
+                  <BlockSpacer spacing="loose" />
+                </Modal>
+              }
+            >
+              External Door Product Disclaimer
+            </Link>{' '}
+            and understand that by not following this information, I will void the door's warranty.
+          </Text>
         </Checkbox>
       )}
       {showThirdCheckbox && (
