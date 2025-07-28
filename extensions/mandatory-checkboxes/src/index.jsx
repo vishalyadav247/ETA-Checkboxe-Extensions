@@ -34,23 +34,23 @@ function ConditionalMandatoryCheckboxes() {
   })
 
   const checkFinishLogic = (products) => {
-    const hasFinish = products.some(product =>
-      product.merchandise?.selectedOptions?.some(option => option.name.toLowerCase() === "finish")
-    );
+    // List of target finish values (lowercase for comparison)
+    const targetFinishes = [
+      "clear oiled",
+      "ebony oak oiled",
+      "antique oak oiled",
+      "medium oak oiled",
+      "pre-finished"
+    ];
 
-    const hasUnfinished = products.some(product =>
-      product.merchandise?.selectedOptions?.some(
-        option => option.name.toLowerCase() === "finish" && option.value.toLowerCase() === "unfinished"
+    // Check for any product having a finish option with any of the target values
+    return products.some(product =>
+      product.merchandise?.selectedOptions?.some(option =>
+        option.name.toLowerCase() === "finish" &&
+        targetFinishes.includes(option.value.toLowerCase())
       )
     );
-
-    if (hasFinish) {
-      return !hasUnfinished
-    } else {
-      return false; // If no finish option, we assume it's valid
-    }
-  }
-  // console.log(allSelectedProductOptions)
+  };
 
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
@@ -60,7 +60,7 @@ function ConditionalMandatoryCheckboxes() {
   const [showThirdCheckbox, setShowThirdCheckbox] = useState(false);
 
   // Determine which checkboxes should be shown
-  const showSecondCheckbox = allProductTypes.some(type => typeof type === 'string' && type.toLowerCase() === 'internal doors');
+  const showSecondCheckbox = allProductTypes.some(type => typeof type === 'string' && type.toLowerCase() === 'external doors');
 
   useEffect(() => {
     let res = checkFinishLogic(cartLines);
